@@ -11,9 +11,9 @@ namespace SimpleHotelManagementSystem_OOPTask
 
         // 13. Static method to print a welcome message
         // Static method PrintWelcomeMessage() 
-        public static void PrintWelcomeMessage()
+        public static void PrintWelcomeMessage(string guestName)
         {
-            Console.WriteLine("Welcome to the Simple Hotel Management System!");
+            Console.WriteLine("Welcome "+guestName+" to the Hotel Management System!");
           
         }
 

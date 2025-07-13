@@ -19,7 +19,11 @@ namespace SimpleHotelManagementSystem_OOPTask
         // 9. Static field to keep track of the total number of rooms
         private static int totalRooms = 0;
 
-        // property to get and set the room number
+
+
+
+        // property to get and set the room number with validation with loop if it fails
+
         public int RoomNumber
         {
             get
@@ -28,27 +32,48 @@ namespace SimpleHotelManagementSystem_OOPTask
             }
             set
             {
-                if (roomNumber <= 0 ) //8. Add validation: - Room number must be positive 
+                // 8. Add validation: - Room number must be positive
+                if (value < 100)
                 {
-                    Console.WriteLine("Room number must be greater than zero.");
+                    Console.WriteLine("Room number must be greater than 100.");
+                    int newRoomNumber;
+                    while (!int.TryParse(Console.ReadLine(), out newRoomNumber) || newRoomNumber < 100)
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid room number greater than 100.");
+                    }
+                    roomNumber = newRoomNumber; // Set the new room number
                 }
-                else if (value <= 0 || value > 100) // 11. Room number cannot be below 100
+                else if (value == roomNumber)
                 {
-                    Console.WriteLine("Room number must be between 1 and 100.");
+                    Console.WriteLine("Room number is already booked " + roomNumber + " Please enter a different room number : ");
+                    int newRoomNumber;
+                    while (!int.TryParse(Console.ReadLine(), out newRoomNumber) || newRoomNumber < 100)
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid room number greater than 100.");
+                    }
+                    roomNumber = newRoomNumber; // Set the new room number
                 }
-                else if (value == roomNumber) // Check if the new room number is the same as the current one
+                else if (value <= 0) // Room number must be positive
                 {
-                    Console.WriteLine("Room number is already set to " + roomNumber);
+                    Console.WriteLine("Room number must be a positive integer.");
+                    // insert another value
+                    Console.WriteLine("Please enter a valid room number must be a positive integer.: ");
+                    int newRoomNumber;
+                    while (!int.TryParse(Console.ReadLine(), out newRoomNumber) || newRoomNumber > 0)
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid room number must be a positive integer.");
+                    }
                 }
                 else
                 {
-                    RoomNumber = roomNumber; // Set the room number if valid
-                    totalRooms++; // 9. Increment the total number 
+                    // Set the room number if valid
+                    roomNumber = value;
+                    totalRooms++; // count only when actually changed
                 }
-
             }
-
         }
+
+
 
 
 
@@ -88,24 +113,23 @@ namespace SimpleHotelManagementSystem_OOPTask
         {
             roomNumber = 0; // Default room number
             isBooked = false; // Initialize as not booked
-
+            totalRooms++;
         }
 
         // Constructor that takes room number as a parameter
         public Room(int roomNumber)
         {
-            if (roomNumber <= 0) //8. Add validation: - Room number must be positive
-            {
-                Console.WriteLine("Room number must be greater than zero.");
-            }
-            else
-            {
-                this.roomNumber = roomNumber; // this - refers to the current instance of the class -- roomNumber is the parameter
-                isBooked = false; // Initialize as not booked
-                totalRooms++; // 9. Increment the total number of rooms
-            }
 
-            
+             if (roomNumber <100) 
+            {
+                Console.WriteLine("Room number must be grater than 100.");
+                this.roomNumber = 0; // Set to default if invalid
+            }
+           
+            this.roomNumber = roomNumber; // this - refers to the current instance of the class -- roomNumber is the parameter
+            totalRooms++; // 9. Increment the total number of rooms
+            isBooked = false; // Initialize as not booked
+
         }
 
 
